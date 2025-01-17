@@ -1,6 +1,6 @@
-import pygame
 from djitellopy import Tello
 from time import time
+import pygame
 import cv2
 import os
 
@@ -54,10 +54,12 @@ class Teleop:
         return lr, fb, ud, yv
 
 class DroneCamera:
-    def __init__(self, drone=None):
+    def __init__(self, drone=None, frame_width=640, frame_height=480):
         """Initialize the camera, using either the drone or a local webcam."""
         self.drone = drone
         self.video_writer = None
+        self.frame_width = frame_width
+        self.frame_height = frame_height
 
         if drone:
             self.drone.streamon()
@@ -72,7 +74,7 @@ class DroneCamera:
             ret, frame = self.capture.read()
             if not ret:
                 raise RuntimeError("Failed to capture frame from webcam.")
-        return cv2.resize(frame, (360, 240))
+        return cv2.resize(frame, (self.frame_width, self.frame_height))
 
     def show_frame(self, frame):
         """Display the captured frame."""
@@ -91,7 +93,32 @@ class DroneCamera:
         cv2.imwrite(filename, frame_rgb)
         print(f"Image saved to {filename}")
 
-
+    def findFace(self, frame):
+        """Computer vision method for face detection."""
+        frame_gray = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
+        
+        face_cascade = cv2.CascadeClassifier("resources/haarcascade_frontalface_default.xml")
+        faces = face_cascade.detectMultiScale(frame_gray, 1.2, 8)
+        
+        face_list_center = []
+        face_list_area = []
+        
+        for (x,y,face_width,face_height) in faces:
+            cv2.rectangle(frame, (x,y), (x+face_width,y+face_height), (255,0,0), 2)
+            cx = x + face_width//2
+            cy = y + face_height//2
+            area = face_width * face_height
+            
+            face_list_center.append([cx,cy])
+            face_list_area.append(area)
+            
+            cv2.circle(frame, (cx,cy), 5, (0,255,0), cv2.FILLED)
+            
+        if len(face_list_area) != 0:
+            i = face_list_area.index(max(face_list_area))
+            return frame, [face_list_center[i], face_list_area[i]]
+        else:
+            return frame, [[0,0], 0]
     def start_video_recording(self, save_path="videos"):
         """Start recording video."""
         if not os.path.exists(save_path):
@@ -126,7 +153,6 @@ def main():
     teleop = Teleop()
     drone = Tello()
     drone.connect()
-
     camera = DroneCamera(drone)
     
     print(f"Battery: {drone.get_battery()}%")
@@ -137,6 +163,7 @@ def main():
 
             # Capture and display the video feed
             frame = camera.get_frame()
+            frame, _ = camera.findFace(frame)
             camera.show_frame(frame)
 
             # Check battery warning
