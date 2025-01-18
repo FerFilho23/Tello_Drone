@@ -2,70 +2,78 @@
 
 ![Python](https://img.shields.io/badge/Python-3.10.x-blue?logo=python&logoColor=white)
 ![OpenCV](https://img.shields.io/badge/OpenCV-4.x-green?logo=opencv&logoColor=white)
-![DJITelloPy](https://img.shields.io/badge/DJITelloPy-2.x-orange)
+![DJITelloPy](https://img.shields.io/badge/DJITelloPy-2.x-orange?logo=dji&logoColor=white)
+![Numpy](https://img.shields.io/badge/numpy-2.x-cyan?logo=numpy&logoColor=white)
+![Pygame](https://img.shields.io/badge/pygame-2.x-yellow?logo=pygame&logoColor=white)
 
 ## Project Description
 
-This project is a Python application that allows you to control the DJI Tello drone using your keyboard. It also includes functionalities to capture images, record videos, and display the real-time video feed using the OpenCV library. The project is designed to be modular, making it easy to maintain and extend.
+This project is a Python application that allows you to control the DJI Tello drone using your keyboard. It also includes an **autonomous control by face tracking**, enabling the drone to follow a detected face in real time using OpenCV.
 
-Key features:
+### Key Features
 
-- Drone control via keyboard.
+- **Manual Mode**: Control drone movement via keyboard inputs.
+- **Face Tracking Mode**: The drone can detect and track a face automatically.
 - Display real-time video feed.
 - Capture images and videos from the drone feed.
 
 ## How to Install the Project
 
-1. **Clone the Repository**:
+### 1. Clone the Repository
 
-   ```bash
-   git clone https://github.com/FerFilho23/Tello_Drone.git
-   cd <PROJECT_FOLDER>
-   ```
+```bash
+git clone https://github.com/FerFilho23/Tello_Drone.git
+cd <PROJECT_FOLDER>
+```
 
-2. **Create and Activate a Virtual Environment (Recommended)**:
+### 2. Create and Activate a Virtual Environment (Recommended)
 
-   ```bash
-   python -m venv venv
-   source venv/bin/activate # On Windows: venv\Scripts\activate
-   ```
+```bash
+python -m venv venv
+source venv/bin/activate  # On Windows: venv\Scripts\activate
+```
 
-3. **Install Dependencies**:
+### 3. Install Dependencies
 
-   Install the required packages listed in `requirements.txt`:
+Ensure all required packages are installed:
 
-   ```bash
-   pip install -r requirements.txt
-   ```
+```bash
+pip install -r requirements.txt
+```
 
 ## How to Run the Project
 
-1. **Connect the Drone**:
-   - Ensure the Tello drone is powered on and connected to your computer's Wi-Fi.
+### 1. Connect the Drone
 
-2. **Run the Script**:
-   Execute the main project file:
+- Ensure the Tello drone is powered on and connected to your computer's Wi-Fi.
 
-   ```bash
-   python main.py
-   ```
+### 2. Run the Script
 
-3. **Keyboard Controls**:
-   - **Drone Movement**:
-     - `w`: Move up
-     - `s`: Move down
-     - `a`: Rotate left
-     - `d`: Rotate right
-     - `i`: Move forward
-     - `k`: Move backward
-     - `l`: Move right
-     - `j`: Move left
-   - **Media Functions**:
-     - `c`: Capture an image.
-     - `r`: Start/stop video recording.
-   - **Control Actions**:
-     - `e`: Take off the drone.
-     - `q`: Land the drone.
+Execute the main project file:
+
+```bash
+python main.py
+```
+
+### 3. Keyboard Controls
+
+- **Control Actions**:
+  - `e`: Take off the drone.
+  - `q`: Land the drone.
+- **Drone Movement**:
+  - `w`: Move up
+  - `s`: Move down
+  - `a`: Rotate left
+  - `d`: Rotate right
+  - `i`: Move forward
+  - `k`: Move backward
+  - `l`: Move right
+  - `j`: Move left
+  - **Autonomous Mode**:
+  - `t`: Enable/Disable face tracking.
+- **Media Functions**:
+  - `c`: Capture an image.
+  - `r`: Start/stop video recording.
 
 ## References
 
